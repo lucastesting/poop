@@ -4,42 +4,42 @@
  * Copyright (c) Konstantin Tarkus (@koistya) | MIT license
  */
 
-import path from 'path';
-import webpack from 'webpack';
-import merge from 'lodash.merge';
+import path from "path"
+import webpack from "webpack"
+import merge from "lodash.merge"
 
-const DEBUG = !process.argv.includes('release');
-const VERBOSE = process.argv.includes('verbose');
-const WATCH = global.watch;
+const DEBUG = !process.argv.includes("release")
+const VERBOSE = process.argv.includes("verbose")
+const WATCH = global.watch
 const AUTOPREFIXER_BROWSERS = [
-  'Android 2.3',
-  'Android >= 4',
-  'Chrome >= 35',
-  'Firefox >= 31',
-  'Explorer >= 9',
-  'iOS >= 7',
-  'Opera >= 12',
-  'Safari >= 7.1',
-];
+  "Android 2.3",
+  "Android >= 4",
+  "Chrome >= 35",
+  "Firefox >= 31",
+  "Explorer >= 9",
+  "iOS >= 7",
+  "Opera >= 12",
+  "Safari >= 7.1",
+]
 const JS_LOADER = {
   test: /\.jsx?$/,
   include: [
-    path.resolve(__dirname, '../components'),
-    path.resolve(__dirname, '../core'),
-    path.resolve(__dirname, '../pages'),
-    path.resolve(__dirname, '../app.js'),
-    path.resolve(__dirname, '../config.js'),
+    path.resolve(__dirname, "../components"),
+    path.resolve(__dirname, "../core"),
+    path.resolve(__dirname, "../pages"),
+    path.resolve(__dirname, "../app.js"),
+    path.resolve(__dirname, "../config.js"),
   ],
-  loader: 'babel-loader',
-};
+  loader: "babel-loader",
+}
 
 
 // Base configuration
 const config = {
   output: {
-    path: path.join(__dirname, '../build'),
-    publicPath: '/',
-    sourcePrefix: '  ',
+    path: path.join(__dirname, "../build"),
+    publicPath: "/",
+    sourcePrefix: "  ",
   },
   cache: false,
   debug: DEBUG,
@@ -57,52 +57,52 @@ const config = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
-      '__DEV__': DEBUG,
+      "process.env.NODE_ENV": DEBUG ? "\"development\"" : "\"production\"",
+      "__DEV__": DEBUG,
     }),
   ],
   module: {
     loaders: [
       {
         test: /[\\\/]app\.js$/,
-        loader: path.join(__dirname, './lib/routes-loader.js'),
+        loader: path.join(__dirname, "./lib/routes-loader.js"),
       }, {
         test: /\.json$/,
-        loader: 'json-loader',
+        loader: "json-loader",
       }, {
         test: /\.txt$/,
-        loader: 'raw-loader',
+        loader: "raw-loader",
       }, {
         test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
-        loader: 'url-loader?limit=10000',
+        loader: "url-loader?limit=10000",
       }, {
         test: /\.(eot|ttf|wav|mp3)$/,
-        loader: 'file-loader',
+        loader: "file-loader",
       },
     ],
   },
   postcss: function plugins(bundler) {
     return [
-      require('postcss-import')({ addDependencyTo: bundler }),
-      require('precss')(),
-      require('autoprefixer')({
+      require("postcss-import")({ addDependencyTo: bundler }),
+      require("precss")(),
+      require("autoprefixer")({
         browsers: AUTOPREFIXER_BROWSERS,
       }),
-    ];
+    ]
   },
-};
+}
 
 // Configuration for the client-side bundle
 const appConfig = merge({}, config, {
   entry: [
-    ...(WATCH ? ['webpack-hot-middleware/client'] : []),
-    './app.js',
+    ...(WATCH ? ["webpack-hot-middleware/client"] : []),
+    "./app.js",
   ],
   output: {
-    filename: 'app.js',
+    filename: "app.js",
   },
   // http://webpack.github.io/docs/configuration.html#devtool
-  devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
+  devtool: DEBUG ? "cheap-module-eval-source-map" : false,
   plugins: [
     ...config.plugins,
     ...(DEBUG ? [] : [
@@ -125,17 +125,17 @@ const appConfig = merge({}, config, {
         query: {
           // Wraps all React components into arbitrary transforms
           // https://github.com/gaearon/babel-plugin-react-transform
-          plugins: ['react-transform'],
+          plugins: ["react-transform"],
           extra: {
-            'react-transform': {
+            "react-transform": {
               transforms: [
                 {
-                  transform: 'react-transform-hmr',
-                  imports: ['react'],
-                  locals: ['module'],
+                  transform: "react-transform-hmr",
+                  imports: ["react"],
+                  locals: ["module"],
                 }, {
-                  transform: 'react-transform-catch-errors',
-                  imports: ['react', 'redbox-react'],
+                  transform: "react-transform-catch-errors",
+                  imports: ["react", "redbox-react"],
                 },
               ],
             },
@@ -145,20 +145,20 @@ const appConfig = merge({}, config, {
       ...config.module.loaders,
       {
         test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'postcss-loader'],
+        loaders: ["style-loader", "css-loader", "postcss-loader"],
       },
     ],
   },
-});
+})
 
 // Configuration for server-side pre-rendering bundle
 const pagesConfig = merge({}, config, {
-  entry: './app.js',
+  entry: "./app.js",
   output: {
-    filename: 'app.node.js',
-    libraryTarget: 'commonjs2',
+    filename: "app.node.js",
+    libraryTarget: "commonjs2",
   },
-  target: 'node',
+  target: "node",
   node: {
     console: false,
     global: false,
@@ -177,10 +177,10 @@ const pagesConfig = merge({}, config, {
       ...config.module.loaders,
       {
         test: /\.scss$/,
-        loaders: ['css-loader', 'postcss-loader'],
+        loaders: ["css-loader", "postcss-loader"],
       },
     ],
   },
-});
+})
 
-export default [appConfig, pagesConfig];
+export default [appConfig, pagesConfig]
