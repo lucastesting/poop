@@ -7,6 +7,9 @@
 import path from "path"
 import webpack from "webpack"
 import merge from "lodash.merge"
+import postcssImport from "postcss-import"
+import precss from "precss"
+import autoprefixer from "autoprefixer"
 
 const DEBUG = !process.argv.includes("release")
 const VERBOSE = process.argv.includes("verbose")
@@ -59,7 +62,7 @@ const config = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": DEBUG ? "\"development\"" : "\"production\"",
-      "__DEV__": DEBUG,
+      __DEV__: DEBUG,
     }),
   ],
   module: {
@@ -92,9 +95,9 @@ const config = {
   },
   postcss: function plugins(bundler) {
     return [
-      require("postcss-import")({ addDependencyTo: bundler }),
-      require("precss")(),
-      require("autoprefixer")({
+      postcssImport({ addDependencyTo: bundler }),
+      precss(),
+      autoprefixer({
         browsers: AUTOPREFIXER_BROWSERS,
       }),
     ]
@@ -104,9 +107,16 @@ const config = {
 // Configuration for the client-side bundle
 const appConfig = merge({}, config, {
   entry: [
+    "babel-loader",
     ...(WATCH ? ["webpack-hot-middleware/client"] : []),
     "./app.js",
   ],
+  node: {
+    fs: "empty",
+    net: "empty",
+    tls: "empty",
+    module: "empty",
+  },
   output: {
     filename: "app.js",
   },
@@ -162,7 +172,10 @@ const appConfig = merge({}, config, {
 
 // Configuration for server-side pre-rendering bundle
 const pagesConfig = merge({}, config, {
-  entry: "./app.js",
+  entry: [
+    "babel-loader",
+    "./app.js",
+  ],
   output: {
     filename: "app.node.js",
     libraryTarget: "commonjs2",

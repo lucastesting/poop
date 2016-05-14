@@ -7,7 +7,7 @@
 import glob from "glob"
 import { join } from "path"
 
-export default function(source) {
+module.exports = function routesLoader(source) {
   this.cacheable()
   const target = this.target
   const callback = this.async()
@@ -22,7 +22,7 @@ export default function(source) {
     }
 
     const lines = files.map(file => {
-      let path = "/" + file
+      let path = `/${file}`
 
       if (path === "/index.js" || path === "/index.jsx") {
         path = "/"
@@ -37,14 +37,14 @@ export default function(source) {
       }
 
       if (target === "node" || path === "/404" || path === "/500") {
-        return `  '${path}': () => require('./pages/${file}'),`
+        return `  '${path}': () => require('./pages/${file}').default,`
       }
 
-      return `  '${path}': () => new Promise(resolve => require(['./pages/${file}'], resolve)),`
+      return `'${path}': () => new Promise(resolve => require(['./pages/${file}'], resolve)).default,` // eslint-disable-line max-len
     })
 
     if (lines.length) {
-      return callback(null, source.replace(" routes = {", " routes = {\n" + lines.join("")))
+      return callback(null, source.replace(" routes = {", ` routes = {\n${lines.join("")}`))
     }
 
     return callback(new Error("Cannot find any routes."))

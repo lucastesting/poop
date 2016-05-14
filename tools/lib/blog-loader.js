@@ -7,7 +7,7 @@
 import glob from "glob"
 import { join } from "path"
 
-export default function(source) {
+module.exports = function blogLoader(source) {
   this.cacheable()
   const target = this.target
   const callback = this.async()
@@ -34,13 +34,16 @@ export default function(source) {
 
 
     if (pages.length) {
-      const pagesData = pages.map((page) => {
-        return {
-          page: page,
-          title: "foo" + page,
+      const pagesData = pages.map(page => (
+        {
+          page,
+          title: `foo${page}`,
         }
-      })
-      return callback(null, source.replace(" blogPages = []", (" blogPages = " + JSON.stringify(pagesData))))
+      )
+      )
+      return callback(null,
+                      source.replace(" blogPages = []",
+                                     (` blogPages = ${JSON.stringify(pagesData)}`)))
     }
 
     return callback(new Error("Cannot find any blog pages."))

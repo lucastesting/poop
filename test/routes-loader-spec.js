@@ -6,6 +6,8 @@
 
 import { describe, it } from "mocha"
 import { expect } from "chai"
+import routesLoader from "../tools/lib/routes-loader"
+
 
 describe("routes-loader", () => {
   it("Should load a list of routes", function test(done) {
@@ -16,6 +18,6 @@ describe("routes-loader", () => {
       done()
     }
 
-    require("../tools/lib/routes-loader").call(this, "const routes = {};")
+    routesLoader.call(this, "const routes = {};")
   })
 })

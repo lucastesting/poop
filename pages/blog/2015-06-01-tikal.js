@@ -192,6 +192,6 @@ export default class extends Component {
   }
 };
 
-export const metadata;
-export const intro;
-export const body;
+// export const metadata;
+// export const intro;
+// export const body;

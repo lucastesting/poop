@@ -6,6 +6,7 @@
 
 import GitRepo from "git-repository"
 import task from "./lib/task"
+import build from "./build"
 
 // TODO: Update deployment URL
 const remote = {
@@ -33,10 +34,10 @@ export default task(async function deploy() {
   // Build the project in RELEASE mode which
   // generates optimized and minimized bundles
   process.argv.push("release")
-  await require("./build")()
+  await build()
 
   // Push the contents of the build folder to the remote server via Git
   await repo.add("--all .")
-  await repo.commit("Update " + new Date().toISOString())
-  await repo.push(remote.name, "master:" + remote.branch)
+  await repo.commit(`Update ${new Date().toISOString()}`)
+  await repo.push(remote.name, `master:${remote.branch}`)
 })

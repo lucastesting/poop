@@ -5,7 +5,7 @@
  */
 
 export default {
-  title: 'React Static Boilerplate',
-  description: 'Static website generator for React.js web applications.',
+  title: 'LucasTheNomad.com',
+  description: 'oh look, a description',
   googleAnalyticsId: 'UA-XXXXX-X',
 };
