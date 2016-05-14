@@ -4,11 +4,8 @@
  * Copyright (c) Konstantin Tarkus (@koistya) | MIT license
  */
 
-import React, { Component } from 'react';
-
+import React, { Component } from "react"
 import Link from "../components/Link"
-// import glob from "glob"
-// import fs from 'fs';
 
 const BlogLink = (props) => {
   return (
@@ -19,7 +16,6 @@ const BlogLink = (props) => {
 }
 
 export default class extends Component {
-
   blogPages = []
 
   render() {
@@ -35,7 +31,6 @@ export default class extends Component {
            })
          }
       </div>
-    );
+    )
   }
-
 }
