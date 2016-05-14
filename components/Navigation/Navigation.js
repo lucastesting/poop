@@ -8,15 +8,20 @@ import React from 'react';
 import './Navigation.scss';
 import Link from '../Link';
 
+const NavLink = ({ href, children }) => {
+  return (
+  <li className="Navigation-item">
+    <a className="Navigation-link" href={href} onClick={Link.handleClick}>{children}</a>
+  </li>
+  )
+}
+
 function Navigation() {
   return (
     <ul className="Navigation" role="menu">
-      <li className="Navigation-item">
-        <a className="Navigation-link" href="/" onClick={Link.handleClick}>Home</a>
-      </li>
-      <li className="Navigation-item">
-        <a className="Navigation-link" href="/about" onClick={Link.handleClick}>About</a>
-      </li>
+      <NavLink href="/">Home</NavLink>
+      <NavLink href="/about">About</NavLink>
+      <NavLink href="/blog">Blog</NavLink>
     </ul>
   );
 }

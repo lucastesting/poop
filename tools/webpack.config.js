@@ -27,6 +27,7 @@ const JS_LOADER = {
     path.resolve(__dirname, "../components"),
     path.resolve(__dirname, "../core"),
     path.resolve(__dirname, "../pages"),
+    path.resolve(__dirname, "../pages/blog"),
     path.resolve(__dirname, "../app.js"),
     path.resolve(__dirname, "../config.js"),
   ],
@@ -66,16 +67,24 @@ const config = {
       {
         test: /[\\\/]app\.js$/,
         loader: path.join(__dirname, "./lib/routes-loader.js"),
-      }, {
+      },
+      {
+        test: /[\\\/]pages\/blog\.js$/,
+        loader: path.join(__dirname, "./lib/blog-loader.js"),
+      },
+      {
         test: /\.json$/,
         loader: "json-loader",
-      }, {
+      },
+      {
         test: /\.txt$/,
         loader: "raw-loader",
-      }, {
+      },
+      {
         test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
         loader: "url-loader?limit=10000",
-      }, {
+      },
+      {
         test: /\.(eot|ttf|wav|mp3)$/,
         loader: "file-loader",
       },

@@ -10,8 +10,8 @@ import task from "./lib/task"
 // TODO: Update deployment URL
 const remote = {
   name: "github",
-  url: "https://github.com/lucastesting/poop.git",
-  branch: "gh-pages",
+  url: "https://github.com/lucastesting/lucastesting.github.io.git",
+  branch: "master",
 }
 
 /**
