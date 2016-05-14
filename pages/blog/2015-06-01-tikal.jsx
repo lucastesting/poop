@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 
-const metadata = {
+export const metadataSomething = {
   date: "2015-06-01 19:40",
   title: "Tikal",
   travel_dates: ["2014-08-07", "2014-08-09"],
@@ -8,9 +8,9 @@ const metadata = {
 }
 
 
-const intro = (
+export const intro = (
   <div>
-  <a href="https://www.flickr.com/photos/lucasthenomad/17225779282/in/set-72157652039835056" title="Temple V by Lucas the nomad, on Flickr"><img src="https://farm8.staticflickr.com/7657/17225779282_fa99534481_c.jpg" width="800" height="601" alt="Temple V at Tikal" /></a>
+    <a href="https://www.flickr.com/photos/lucasthenomad/17225779282/in/set-72157652039835056" title="Temple V by Lucas the nomad, on Flickr"><img src="https://farm8.staticflickr.com/7657/17225779282_fa99534481_c.jpg" width="800" height="601" alt="Temple V at Tikal" /></a>
 
     After Semuc Champey I headed to Flores, the city closest to Tikal. It was
     another long minibus day, 11 hours on the bus, but at least this time I got a
@@ -22,7 +22,7 @@ const intro = (
   </div>
 )
 
-const body = (
+export const body = (
   <div>
 
     The next morning I was picked up by another shuttle that took me in to Tikal
@@ -35,7 +35,7 @@ const body = (
     upmarket part of the hotel as it was a bit more private feeling and got the
     sounds of nature after dark.
 
-    <a href="https://www.flickr.com/photos/lucasthenomad/17041100829/in/set-72157652039835056" title="The back of Templo del gran jaguar by Lucas the nomad, on Flickr"><img src="https://farm8.staticflickr.com/7676/17041100829_3235030a1c_c.jpg" width="800" height="601" alt="The back of Templo del gran jaguar"/></a>
+    <a href="https://www.flickr.com/photos/lucasthenomad/17041100829/in/set-72157652039835056" title="The back of Templo del gran jaguar by Lucas the nomad, on Flickr"><img src="https://farm8.staticflickr.com/7676/17041100829_3235030a1c_c.jpg" width="800" height="601" alt="The back of Templo del gran jaguar" /></a>
 
     After checking in I went and did some solo exploring of Tikal. It seemed like a
     long walk before I saw any sign of ruins, then suddenly I was next to an
@@ -190,8 +190,4 @@ export default class extends Component {
       </div>
     )
   }
-};
-
-// export const metadata;
-// export const intro;
-// export const body;
+}

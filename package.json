@@ -12,6 +12,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-preset-stage-3": "^6.5.0",
+    "babel-register": "^6.8.0",
     "browser-sync": "^2.9.11",
     "chai": "^3.4.0",
     "css-loader": "^0.23.1",
@@ -56,9 +57,9 @@
     "lint": "eslint src tools test",
     "lintfix": "eslint --fix src tools test",
     "test": "npm run lint && mocha --compilers js:babel/register",
-    "clean": "babel-node --eval \"require('./tools/clean').default().catch(err => console.log(err.stack))\"",
-    "build": "babel-node --eval \"(require('./tools/build').default()).catch(err => console.log(err.stack))\"",
-    "start": "babel-node --eval \"require('./tools/start').default().catch(err => console.log(err.stack))\"",
-    "deploy": "babel-node --eval \"require('./tools/deploy').default().catch(err => console.log(err.stack))\""
+    "clean": "babel-node --eval \"require('babel-register');require('babel-polyfill');require('./tools/clean').default().catch(err => console.log(err.stack))\"",
+    "build": "babel-node --eval \"require('babel-register');require('babel-polyfill');(require('./tools/build').default()).catch(err => console.log(err.stack))\"",
+    "start": "babel-node --eval \"require('babel-register');require('babel-polyfill');require('./tools/start').default().catch(err => console.log(err.stack))\"",
+    "deploy": "babel-node --eval \"require('babel-register');require('babel-polyfill');require('./tools/deploy').default().catch(err => console.log(err.stack))\""
   }
 }

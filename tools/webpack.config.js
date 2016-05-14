@@ -72,7 +72,7 @@ const config = {
         loader: path.join(__dirname, "./lib/routes-loader.js"),
       },
       {
-        test: /[\\\/]pages\/blog(\/.*)?\.js$/,
+        test: /[\\\/]pages\/blog(\/.*)?\.jsx?$/,
         loader: path.join(__dirname, "./lib/blog-loader.js"),
       },
       {
