@@ -12,6 +12,7 @@ module.exports = function routesLoader(source) {
   const target = this.target
   const callback = this.async()
 
+  console.log(source)
   if (target === "node") {
     source = source.replace("import 'babel/polyfill';", "") // eslint-disable-line no-param-reassign
   }
@@ -32,9 +33,12 @@ module.exports = function routesLoader(source) {
         path = path.substr(0, path.length - 10)
       } else if (path.endsWith(".js")) {
         path = path.substr(0, path.length - 3)
+      } else if (path.endsWith(".markdown")) {
+        path = path.substr(0, path.length - 9)
       } else if (path.endsWith(".jsx")) {
         path = path.substr(0, path.length - 4)
       }
+
 
       if (target === "node" || path === "/404" || path === "/500") {
         return `  '${path}': () => require('./pages/${file}').default,`

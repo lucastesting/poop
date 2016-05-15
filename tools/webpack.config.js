@@ -66,10 +66,23 @@ const config = {
     }),
   ],
   module: {
+    preLoaders: [
+      {
+        test: /[\\\/]pages\/blog(\/.*)?\.markdown$/,
+        loader: path.join(__dirname, "./lib/legacy-markdown-loader.js"),
+      },
+    ],
     loaders: [
       {
-        test: /[\\\/]app\.js$/,
+        test: /[\\\/]app\.{js,jsx}$/,
         loader: path.join(__dirname, "./lib/routes-loader.js"),
+      },
+      {
+        test: /[\\\/]pages\/blog(\/.*)?\.markdown$/,
+        include: [
+          path.resolve(__dirname, "../pages/blog"),
+        ],
+        loader: "babel-loader",
       },
       {
         test: /[\\\/]pages\/blog(\/.*)?\.jsx?$/,

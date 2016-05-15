@@ -1,4 +1,5 @@
-import React, { Component } from "react"
+import React from "react"
+import BlogPost from "../../components/BlogPost"
 
 export const metadataSomething = {
   date: "2015-06-01 19:40",
@@ -12,13 +13,13 @@ export const intro = (
   <div>
     <a href="https://www.flickr.com/photos/lucasthenomad/17225779282/in/set-72157652039835056" title="Temple V by Lucas the nomad, on Flickr"><img src="https://farm8.staticflickr.com/7657/17225779282_fa99534481_c.jpg" width="800" height="601" alt="Temple V at Tikal" /></a>
 
-    After Semuc Champey I headed to Flores, the city closest to Tikal. It was
+    <p>After Semuc Champey I headed to Flores, the city closest to Tikal. It was
     another long minibus day, 11 hours on the bus, but at least this time I got a
     single seat near the door without one in front of it, so I had plenty of legroom
     and nobody taking up the space where my shoulders go. I stayed the night in a
     hotel where I was the only guest. I really don't think the travel agent made
     much effort to get me in somewhere cheap as I had to walk past a few different
-    hostels to get there. I made good use of the air conditioning at least!
+    hostels to get there. I made good use of the air conditioning at least!</p>
   </div>
 )
 
@@ -178,16 +179,5 @@ export const body = (
   </div>
 )
 
-export default class extends Component {
-  blogPages = []
-
-  render() {
-    return (
-      <div>
-      {intro}
-
-      {body}
-      </div>
-    )
-  }
-}
+const blogPages = [] // eslint-disable-line no-unused-vars
+export default () => <BlogPost intro={intro} body={body} />
