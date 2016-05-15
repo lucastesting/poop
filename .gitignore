@@ -5,3 +5,6 @@ build
 node_modules
 npm-debug.log
 .tern-project
+flickr-data
+.DS_Store
+npm-debug.log.*
