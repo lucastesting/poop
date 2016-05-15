@@ -24,6 +24,7 @@
     "eslint-plugin-react": "^5.1.1",
     "fbjs": "^0.8.2",
     "file-loader": "^0.8.4",
+    "flickrapi": "^0.4.2",
     "git-repository": "^0.1.1",
     "glob": "^7.0.3",
     "history": "^2.1.1",

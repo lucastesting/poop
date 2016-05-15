@@ -39,7 +39,7 @@ module.exports = function blogLoader(source) {
       const pagesData = pages.map(page => (
         {
           page,
-          title: `foo${page}`,
+          title: page,
         }
       )
       )
