@@ -25,7 +25,7 @@ const AUTOPREFIXER_BROWSERS = [
   "Safari >= 7.1",
 ]
 const JS_LOADER = {
-  test: /\.jsx?$/,
+  test: /\.(jsx?|markdown)$/,
   include: [
     path.resolve(__dirname, "../components"),
     path.resolve(__dirname, "../core"),
@@ -34,9 +34,8 @@ const JS_LOADER = {
     path.resolve(__dirname, "../app.js"),
     path.resolve(__dirname, "../config.js"),
   ],
-  loader: "babel-loader",
+  loader: `babel-loader!${path.join(__dirname, "./lib/legacy-markdown-loader.js")}`,
 }
-
 
 // Base configuration
 const config = {
@@ -66,23 +65,10 @@ const config = {
     }),
   ],
   module: {
-    preLoaders: [
-      {
-        test: /[\\\/]pages\/blog(\/.*)?\.markdown$/,
-        loader: path.join(__dirname, "./lib/legacy-markdown-loader.js"),
-      },
-    ],
     loaders: [
       {
-        test: /[\\\/]app\.{js,jsx}$/,
+        test: /[\\\/]app\.js$/,
         loader: path.join(__dirname, "./lib/routes-loader.js"),
-      },
-      {
-        test: /[\\\/]pages\/blog(\/.*)?\.markdown$/,
-        include: [
-          path.resolve(__dirname, "../pages/blog"),
-        ],
-        loader: "babel-loader",
       },
       {
         test: /[\\\/]pages\/blog(\/.*)?\.jsx?$/,

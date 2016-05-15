@@ -1,6 +1,29 @@
+function closeImgTags(source) {
+  return source.replace(/(<img [^>]*)/g, (_match, p1) => {
+    if (p1[p1.length - 1] === "/") return p1
+    return `${p1} /`
+  })
+}
+
+function paragraphize(memo, line, index, array) {
+  if (index === 0) { memo.push("<p>") }
+  if (line === "") { memo.push("</p>") }
+  memo.push(line)
+  if (line === "") { memo.push("<p>") }
+  if (index === (array.length - 1)) { memo.push("</p>") }
+  return memo
+}
+
+function format(source) {
+  return source.
+    split("\n").
+    reduce(paragraphize, []).
+    join("\n")
+}
+
+
 module.exports = function parseLegacyMarkdown(source) {
-  const file = source.split("\n")
-  if (file[0] === "---") throw Error
+  const file = closeImgTags(source).split("\n")
   const endMeta = file.indexOf("---", 1)
   const endIntro = file.indexOf("<!-- more -->")
 
@@ -23,27 +46,15 @@ module.exports = function parseLegacyMarkdown(source) {
   const intro = file.
     slice(endMeta + 1, endIntro).
     join("\n").
-    trim().
-    split("\n")
+    trim()
 
   const body = file.
     slice(endIntro + 1, file.length).
     join("\n").
-    trim().
-    split("\n")
+    trim()
 
-
-  const paragraphize = (memo, line, index, array) => {
-    if (index === 0) { memo.push("<p>") }
-    if (line === "") { memo.push("</p>") }
-    memo.push(line)
-    if (line === "") { memo.push("<p>") }
-    if (index === (array.length - 1)) { memo.push("</p>") }
-    return memo
-  }
-
-  const nicerIntro = intro.reduce(paragraphize, [])
-  const nicerBody = body.reduce(paragraphize, [])
+  const nicerIntro = format(intro)
+  const nicerBody = format(body)
 
   return { intro: nicerIntro, body: nicerBody, meta: nicerMeta }
 }

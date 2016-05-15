@@ -12,12 +12,11 @@ module.exports = function routesLoader(source) {
   const target = this.target
   const callback = this.async()
 
-  console.log(source)
   if (target === "node") {
     source = source.replace("import 'babel/polyfill';", "") // eslint-disable-line no-param-reassign
   }
 
-  glob("**/*.{js,jsx}", { cwd: join(__dirname, "../../pages") }, (err, files) => {
+  glob("**/*.{js,jsx,markdown}", { cwd: join(__dirname, "../../pages") }, (err, files) => {
     if (err) {
       return callback(err)
     }

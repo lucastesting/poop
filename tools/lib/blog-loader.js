@@ -16,7 +16,7 @@ module.exports = function blogLoader(source) {
     source = source.replace("import 'babel/polyfill';", "") // eslint-disable-line no-param-reassign
   }
 
-  glob("**/*.{js,jsx}", { cwd: join(__dirname, "../../pages/blog") }, (err, files) => {
+  glob("**/*.{js,jsx,markdown}", { cwd: join(__dirname, "../../pages/blog") }, (err, files) => {
     if (err) {
       return callback(err)
     }
@@ -28,6 +28,8 @@ module.exports = function blogLoader(source) {
         path = path.substr(0, path.length - 3)
       } else if (path.endsWith(".jsx")) {
         path = path.substr(0, path.length - 4)
+      } else if (path.endsWith(".markdown")) {
+        path = path.substr(0, path.length - 9)
       }
       return path
     })
