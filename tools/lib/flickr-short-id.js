@@ -18,7 +18,6 @@ function base58(n) {
 
   while (idNumber > 0) {
     const remainder = idNumber % base
-    console.log("remainder", remainder)
     idNumber = parseInt(idNumber / base, 10)
     result = alphabet[remainder] + result
   }

@@ -11,13 +11,10 @@ module.exports = function flickrUrlLoader(source) {
   this.cacheable()
   const callback = this.async()
 
-  return replaceAsync(source, /<FlickrImageLegacy [^>]+>/, (value) => {
-    replaceAsync(value, /flickrID="([0-9]+)"/, (_, id) => {
+  replaceAsync(source, /<FlickrImageLegacy [^>]+>/, (value) => (
+    replaceAsync(value, /(.*) flickrID="([0-9]+)" (.*)/, (_, start, id, end) => (
       flickrPhotoUrlLookup(id)
-      .then(data => `height=${data.height} width=${data.width} src="${data.source}"`)
-    })
-  })
-  .then(result => {
-    callback(null, result)
-  })
+      .then(data => (`${start} height={${parseInt(data.height / 2, 10)}} width={${parseInt(data.width / 2, 10)}} src="${data.source}" ${end}`))
+    ))
+  .then(result => callback(null, result))))
 }
