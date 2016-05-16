@@ -26,14 +26,18 @@ function extractFlickrImageDetails(line) {
   }
 }
 
+function escapeQuotes(str) {
+  return str.replace(/"/g, "&quot;")
+}
+
 function paragraphize(memo, line, index, array) {
   if (index === 0) { memo.push("<p>") }
   if (line === "") { memo.push("</p>") }
   if (lineIsFlickrImage(line)) {
     const flickrID = extractFlickrImageId(line)
     const flickrDetails = extractFlickrImageDetails(line)
-    memo.push(`<p> flickr image: ${flickrID}, imagePageUrl: ${flickrDetails.imagePageUrl} altTag: ${flickrDetails.altTag}</p>`)
-    // memo.push(`<FlickrImageLegacy flickrID={${flickrID}} linkUrl={${flickrDetails.imagePageUrl}} caption={${flickrDetails.altTag}} />`)
+//    memo.push(`<p> flickr image: ${flickrID}, imagePageUrl: ${flickrDetails.imagePageUrl} altTag: ${flickrDetails.altTag}</p>`)
+    memo.push(`<FlickrImageLegacy flickrID="${flickrID}" linkUrl="${flickrDetails.imagePageUrl}" caption="${escapeQuotes(flickrDetails.altTag)}" />`)
   } else {
     memo.push(line)
   }

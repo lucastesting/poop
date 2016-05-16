@@ -34,7 +34,7 @@ const JS_LOADER = {
     path.resolve(__dirname, "../app.js"),
     path.resolve(__dirname, "../config.js"),
   ],
-  loader: `babel-loader!${path.join(__dirname, "./lib/legacy-markdown-loader.js")}`,
+  loader: `babel-loader!${path.join(__dirname, "./lib/flickr-url-loader.js")}!${path.join(__dirname, "./lib/legacy-markdown-loader.js")}`,
 }
 
 // Base configuration

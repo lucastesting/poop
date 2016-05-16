@@ -33,7 +33,7 @@ function lookupPhoto(id) {
   )
 }
 
-function getImageData(id) {
+export default function getImageData(id) {
   return lookupPhoto(id)
     .then(sizes => sizes["Large 1600"] ||
                    sizes.Large ||

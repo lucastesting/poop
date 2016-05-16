@@ -18,6 +18,6 @@ module.exports = function legacyMarkdownLoader(source) {
   const data = legacyMarkdownParser(source)
 
   return callback(null,
-    `import React from "react"\nimport BlogPost from "../../components/BlogPost"\nexport const metadataSomething = ${JSON.stringify(data.meta)}\nexport const intro = <div>${data.intro}</div>\nexport const body = <div>${data.body}</div>\nconst blogPages = [] \nexport default () => <BlogPost intro={intro} body={body} />` // eslint-disable-line max-len
+    `import React from "react"\nimport FlickrImageLegacy from "../../components/FlickrImageLegacy"\nimport BlogPost from "../../components/BlogPost"\nexport const metadataSomething = ${JSON.stringify(data.meta)}\nexport const intro = <div>${data.intro}</div>\nexport const body = <div>${data.body}</div>\nconst blogPages = [] \nexport default () => <BlogPost intro={intro} body={body} />` // eslint-disable-line max-len
                  )
 }
