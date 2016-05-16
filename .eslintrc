@@ -14,6 +14,7 @@
   },
   "rules": {
     "strict": 0,
+    "max-len": [1, 150],
     "react/jsx-quotes": 0,
     "jsx-quotes": [2, "prefer-double"],
     "quotes": [2, "double"],
