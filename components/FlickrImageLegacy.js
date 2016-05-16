@@ -11,8 +11,8 @@ const FlickrImageLegacy = ({ linkUrl, src, height, width, caption }) => (
 FlickrImageLegacy.propTypes = {
   linkUrl: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired,
-  width: PropTypes.string.isRequired,
+  height: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
   caption: PropTypes.string.isRequired,
 }
 export default FlickrImageLegacy
