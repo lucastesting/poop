@@ -6,6 +6,7 @@
 
 import glob from "glob"
 import { join } from "path"
+import { legacyBlogUrl, legacyBlogPath } from "../../lib/legacyBlogStuff"
 
 module.exports = function routesLoader(source) {
   this.cacheable()
@@ -38,6 +39,9 @@ module.exports = function routesLoader(source) {
         path = path.substr(0, path.length - 4)
       }
 
+      if (legacyBlogPath(path)) {
+        path = legacyBlogUrl(path)
+      }
 
       if (target === "node" || path === "/404" || path === "/500") {
         return `  '${path}': () => require('./pages/${file}').default,`
