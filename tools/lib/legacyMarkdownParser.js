@@ -1,3 +1,5 @@
+import parseUtils from "parse5-utils"
+
 function closeImgTags(source) {
   return source.replace(/(<img [^>]*)/g, (_match, p1) => {
     if (p1[p1.length - 1] === "/") return p1
@@ -5,10 +7,36 @@ function closeImgTags(source) {
   })
 }
 
+function lineIsFlickrImage(line) {
+  return line.match(/<a [^>]*><img [^>]*src="https:\/\/farm[0-9]+.staticflickr.com[^>]*>/)
+}
+
+function extractFlickrImageId(line) {
+  return parseInt(
+    line.match(/src="https:\/\/farm[0-9]+.staticflickr.com\/[0-9]+\/([0-9]+)_[^>]*>/)[1],
+    10)
+}
+
+function extractFlickrImageDetails(line) {
+  const doc = parseUtils.parseFragment(line)
+
+  return {
+    imagePageUrl: parseUtils.attributesOf(doc.childNodes[0]).href,
+    altTag: parseUtils.attributesOf(doc.childNodes[0].childNodes[0]).alt,
+  }
+}
+
 function paragraphize(memo, line, index, array) {
   if (index === 0) { memo.push("<p>") }
   if (line === "") { memo.push("</p>") }
-  memo.push(line)
+  if (lineIsFlickrImage(line)) {
+    const flickrID = extractFlickrImageId(line)
+    const flickrDetails = extractFlickrImageDetails(line)
+    memo.push(`<p> flickr image: ${flickrID}, imagePageUrl: ${flickrDetails.imagePageUrl} altTag: ${flickrDetails.altTag}</p>`)
+    // memo.push(`<FlickrImageLegacy flickrID={${flickrID}} linkUrl={${flickrDetails.imagePageUrl}} caption={${flickrDetails.altTag}} />`)
+  } else {
+    memo.push(line)
+  }
   if (line === "") { memo.push("<p>") }
   if (index === (array.length - 1)) { memo.push("</p>") }
   return memo
@@ -20,7 +48,6 @@ function format(source) {
     reduce(paragraphize, []).
     join("\n")
 }
-
 
 module.exports = function parseLegacyMarkdown(source) {
   const file = closeImgTags(source).split("\n")
